@@ -1,0 +1,28 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int[] bars = new int[n];
+        for (int i = 0; i < n; i++) {
+            bars[i] = sc.nextInt();
+        }
+
+        int left = 0, right = n - 1;
+        int aliceTotalTime = 0, bobTotalTime = 0;
+        int aliceBars = 0, bobBars = 0;
+
+        while (left <= right) {
+            if (aliceTotalTime <= bobTotalTime) {
+                aliceTotalTime += bars[left++];
+                aliceBars++;
+            } else {
+                bobTotalTime += bars[right--];
+                bobBars++;
+            }
+        }
+
+        System.out.println(aliceBars + " " + bobBars);
+    }
+}
