@@ -1,0 +1,49 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
+        
+        while (t-- > 0) {
+            int n = sc.nextInt(), l = sc.nextInt(), r = sc.nextInt();
+            int[] arr = new int[n];
+            for (int i = 0; i < n; i++) arr[i] = sc.nextInt();
+            
+            Arrays.sort(arr);
+            long count = 0;
+            
+            for (int i = 0; i < n; i++) {
+                int lower = l - arr[i];
+                int upper = r - arr[i];
+                count += countValidPairs(arr, lower, upper, i + 1, n);
+            }
+            
+            System.out.println(count);
+        }
+    }
+    
+    private static int countValidPairs(int[] arr, int lower, int upper, int start, int end) {
+        return upperBound(arr, upper, start, end) - lowerBound(arr, lower, start, end);
+    }
+
+    private static int lowerBound(int[] arr, int target, int start, int end) {
+        int lo = start, hi = end;
+        while (lo < hi) {
+            int mid = lo + (hi - lo) / 2;
+            if (arr[mid] < target) lo = mid + 1;
+            else hi = mid;
+        }
+        return lo;
+    }
+
+    private static int upperBound(int[] arr, int target, int start, int end) {
+        int lo = start, hi = end;
+        while (lo < hi) {
+            int mid = lo + (hi - lo) / 2;
+            if (arr[mid] <= target) lo = mid + 1;
+            else hi = mid;
+        }
+        return lo;
+    }
+}
